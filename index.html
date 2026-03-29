@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APIKEY ONLINE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --blood-red: #ff2e2e;
+  --ocean-blue: #008cff;
+}
+
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  background: radial-gradient(circle at 50% 70%, #001224, #00050a 85%);
+  font-family: "Poppins", sans-serif;
+  overflow:hidden;
+  color:white;
+}
+
+/* Title */
+.title{
+  font-size:clamp(26px,5vw,48px);
+  font-weight:700;
+  color:var(--blood-red);
+  text-shadow:
+    0 0 12px #ff0000,
+    0 0 40px #580000,
+    0 0 75px var(--ocean-blue);
+  animation:pulse 1.8s infinite ease-in-out;
+  text-align:center;
+  z-index:20;
+}
+@keyframes pulse{
+ 0%{transform:scale(1);opacity:0.8;}
+ 50%{transform:scale(1.15);opacity:1;}
+ 100%{transform:scale(1);opacity:0.8;}
+}
+
+/* Background Mist */
+.mist{
+ position:absolute;
+ width:200%;
+ height:200%;
+ background:radial-gradient(circle,rgba(0,150,255,0.25),transparent 70%);
+ filter:blur(32px);
+ animation:mistmove 14s infinite alternate ease-in-out;
+}
+@keyframes mistmove{
+ 0%{transform:translate(-10%, -12%) scale(1.05);}
+ 100%{transform:translate(12%, 10%) scale(1.22);}
+}
+
+/* Qi Particle */
+.qi{
+ position:absolute;
+ width:7px;height:7px;
+ border-radius:50%;
+ filter:blur(2px);
+ animation:float 3s infinite ease-in-out;
+}
+@keyframes float{
+ 0%{transform:translateY(0) scale(1);opacity:1;}
+ 50%{transform:translateY(-55px) scale(1.7);opacity:.6;}
+ 100%{transform:translateY(0) scale(1);opacity:1;}
+}
+
+/* Dragon Circle */
+.dragon-ring{
+ position:absolute;
+ width:350px; height:350px;
+ border-radius:50%;
+ border:4px solid transparent;
+ animation:spin 6s linear infinite;
+ filter:blur(2px);
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.dragon-red{
+ box-shadow:0 0 18px var(--blood-red),0 0 80px rgba(255,0,0,0.6);
+ border-top:4px solid var(--blood-red);
+}
+.dragon-blue{
+ box-shadow:0 0 18px var(--ocean-blue),0 0 80px rgba(0,110,255,0.6);
+ border-bottom:4px solid var(--ocean-blue);
+}
+
+/* Dragon Aura */
+.dragon-energy{
+ position:absolute;
+ width: 180px; height:180px;
+ border-radius:50%;
+ filter:blur(12px);
+ opacity:0.5;
+ animation:dragonMove 3.5s infinite ease-in-out;
+}
+@keyframes dragonMove{
+0%{transform:translate(-40px,-60px) scale(.9);}
+50%{transform:translate(40px,40px) scale(1.2);}
+100%{transform:translate(-40px,-60px) scale(.9);}
+}
+.red-energy{background:radial-gradient(circle, rgba(255,0,0,0.8), transparent);}
+.blue-energy{background:radial-gradient(circle, rgba(0,120,255,0.8), transparent);}
+
+/* Real Sword */
+.real-sword {
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ width: 170px;
+ transform: translate(-50%, -50%);
+ filter: drop-shadow(0 0 12px #00eaff) drop-shadow(0 0 22px #ff002b);
+ animation: swordFloat 3s ease-in-out infinite, swordGlow 2.5s infinite ease-in-out;
+ z-index: 5;
+}
+@keyframes swordFloat {
+ 0% { transform: translate(-50%, -50%) translateY(0); }
+ 50% { transform: translate(-50%, -50%) translateY(-18px); }
+ 100% { transform: translate(-50%, -50%) translateY(0); }
+}
+@keyframes swordGlow {
+ 0% { filter: drop-shadow(0 0 8px #008cff) drop-shadow(0 0 18px #ff002b); }
+ 50% { filter: drop-shadow(0 0 18px #00eaff) drop-shadow(0 0 32px #ff0037); }
+ 100% { filter: drop-shadow(0 0 8px #008cff) drop-shadow(0 0 18px #ff002b); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Mist -->
+<div class="mist"></div>
+
+<!-- Sword -->
+<img src="https://files.cloudkuimages.guru/images/77cc2978b092.png" class="real-sword" alt="Sword">
+
+<!-- Dragon Elements -->
+<div class="dragon-ring dragon-red"></div>
+<div class="dragon-ring dragon-blue"></div>
+<div class="dragon-energy red-energy"></div>
+<div class="dragon-energy blue-energy"></div>
+
+<!-- Title -->
+<div class="title"></div>
+
+<!-- Music -->
+<audio id="bgm" autoplay loop>
+  <source src="https://files.cloudkuimages.guru/audios/cd1a3250b1b1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// generate qi
+for(let i=0;i<50;i++){
+ let qi=document.createElement("div");
+ qi.className="qi";
+ qi.style.left=Math.random()*100+"vw";
+ qi.style.top=Math.random()*100+"vh";
+ qi.style.animationDelay=Math.random()*3+"s";
+ qi.style.background=Math.random()>.5
+  ? "rgba(255,0,0,.9)"
+  : "rgba(0,140,255,.9)";
+ document.body.appendChild(qi);
+}
+
+// mobile autoplay fix
+window.onload=()=>{let a=document.getElementById("bgm");
+a.volume=.45;
+a.play().catch(()=>{document.body.addEventListener("click",()=>a.play(),{once:true});});
+};
+</script>
+
+</body>
+</html>
